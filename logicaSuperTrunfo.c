@@ -12,6 +12,82 @@ typedef struct {
     float pibPerCapita;
 } Carta;
 
+void compararCartas(Carta c1, Carta c2, int opcao) {
+    printf("\n🔎 Comparação de Cartas\n");
+    printf("Carta 1: %s (%c)\n", c1.nomeCidade, c1.estado);
+    printf("Carta 2: %s (%c)\n", c2.nomeCidade, c2.estado);
+
+    switch (opcao) {
+        case 1:
+            printf("\n[Atributo: População]\n");
+            printf("%s: %lu habitantes\n", c1.nomeCidade, c1.populacao);
+            printf("%s: %lu habitantes\n", c2.nomeCidade, c2.populacao);
+
+            if (c1.populacao > c2.populacao)
+                printf("🏆 Vencedora: %s\n", c1.nomeCidade);
+            else if (c2.populacao > c1.populacao)
+                printf("🏆 Vencedora: %s\n", c2.nomeCidade);
+            else
+                printf("🤝 Resultado: Empate!\n");
+            break;
+
+        case 2:
+            printf("\n[Atributo: Área]\n");
+            printf("%s: %.2f km²\n", c1.nomeCidade, c1.area);
+            printf("%s: %.2f km²\n", c2.nomeCidade, c2.area);
+
+            if (c1.area > c2.area)
+                printf("🏆 Vencedora: %s\n", c1.nomeCidade);
+            else if (c2.area > c1.area)
+                printf("🏆 Vencedora: %s\n", c2.nomeCidade);
+            else
+                printf("🤝 Resultado: Empate!\n");
+            break;
+
+        case 3:
+            printf("\n[Atributo: PIB]\n");
+            printf("%s: %.2f bilhões\n", c1.nomeCidade, c1.pib);
+            printf("%s: %.2f bilhões\n", c2.nomeCidade, c2.pib);
+
+            if (c1.pib > c2.pib)
+                printf("🏆 Vencedora: %s\n", c1.nomeCidade);
+            else if (c2.pib > c1.pib)
+                printf("🏆 Vencedora: %s\n", c2.nomeCidade);
+            else
+                printf("🤝 Resultado: Empate!\n");
+            break;
+
+        case 4:
+            printf("\n[Atributo: Pontos Turísticos]\n");
+            printf("%s: %d pontos\n", c1.nomeCidade, c1.pontosTuristicos);
+            printf("%s: %d pontos\n", c2.nomeCidade, c2.pontosTuristicos);
+
+            if (c1.pontosTuristicos > c2.pontosTuristicos)
+                printf("🏆 Vencedora: %s\n", c1.nomeCidade);
+            else if (c2.pontosTuristicos > c1.pontosTuristicos)
+                printf("🏆 Vencedora: %s\n", c2.nomeCidade);
+            else
+                printf("🤝 Resultado: Empate!\n");
+            break;
+
+        case 5:
+            printf("\n[Atributo: Densidade Populacional]\n");
+            printf("%s: %.2f hab/km²\n", c1.nomeCidade, c1.densidadePopulacional);
+            printf("%s: %.2f hab/km²\n", c2.nomeCidade, c2.densidadePopulacional);
+
+            if (c1.densidadePopulacional < c2.densidadePopulacional)
+                printf("🏆 Vencedora: %s (menor densidade)\n", c1.nomeCidade);
+            else if (c2.densidadePopulacional < c1.densidadePopulacional)
+                printf("🏆 Vencedora: %s (menor densidade)\n", c2.nomeCidade);
+            else
+                printf("🤝 Resultado: Empate!\n");
+            break;
+
+        default:
+            printf("❌ Opção inválida! Escolha de 1 a 5.\n");
+    }
+}
+
 int main() {
     Carta carta1, carta2;
 
@@ -38,20 +114,15 @@ int main() {
     printf("Digite o número de pontos turísticos: ");
     scanf("%d", &carta1.pontosTuristicos);
 
-    // Cálculos carta 1
     if (carta1.area > 0)
         carta1.densidadePopulacional = carta1.populacao / carta1.area;
-    else {
+    else
         carta1.densidadePopulacional = 0.0f;
-        printf("⚠️ Atenção: Área da carta 1 é zero.\n");
-    }
 
     if (carta1.populacao > 0)
         carta1.pibPerCapita = (carta1.pib * 1000000000.0) / carta1.populacao;
-    else {
+    else
         carta1.pibPerCapita = 0.0f;
-        printf("⚠️ Atenção: População da carta 1 é zero.\n");
-    }
 
     printf("\n");
 
@@ -78,36 +149,30 @@ int main() {
     printf("Digite o número de pontos turísticos: ");
     scanf("%d", &carta2.pontosTuristicos);
 
-    // Cálculos carta 2
     if (carta2.area > 0)
         carta2.densidadePopulacional = carta2.populacao / carta2.area;
-    else {
+    else
         carta2.densidadePopulacional = 0.0f;
-        printf("⚠️ Atenção: Área da carta 2 é zero.\n");
-    }
 
     if (carta2.populacao > 0)
         carta2.pibPerCapita = (carta2.pib * 1000000000.0) / carta2.populacao;
-    else {
+    else
         carta2.pibPerCapita = 0.0f;
-        printf("⚠️ Atenção: População da carta 2 é zero.\n");
-    }
 
     printf("\n");
 
-    // COMPARAÇÃO - Atributo fixo: POPULAÇÃO
-    printf("🔎 Comparação de Cartas (Atributo: População)\n\n");
+    // Menu interativo
+    int escolha;
+    printf("📋 Escolha o atributo para comparar:\n");
+    printf("1. População\n");
+    printf("2. Área\n");
+    printf("3. PIB\n");
+    printf("4. Pontos Turísticos\n");
+    printf("5. Densidade Populacional (menor vence)\n");
+    printf("Digite sua opção (1-5): ");
+    scanf("%d", &escolha);
 
-    printf("Carta 1 - %s (%c): %lu habitantes\n", carta1.nomeCidade, carta1.estado, carta1.populacao);
-    printf("Carta 2 - %s (%c): %lu habitantes\n", carta2.nomeCidade, carta2.estado, carta2.populacao);
-
-    if (carta1.populacao > carta2.populacao) {
-        printf("\n🏆 Resultado: Carta 1 (%s) venceu!\n", carta1.nomeCidade);
-    } else if (carta2.populacao > carta1.populacao) {
-        printf("\n🏆 Resultado: Carta 2 (%s) venceu!\n", carta2.nomeCidade);
-    } else {
-        printf("\n🤝 Resultado: Empate! Ambas as cidades têm a mesma população.\n");
-    }
+    compararCartas(carta1, carta2, escolha);
 
     return 0;
 }
